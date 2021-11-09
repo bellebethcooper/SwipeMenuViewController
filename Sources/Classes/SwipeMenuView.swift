@@ -282,14 +282,19 @@ open class SwipeMenuView: UIView {
 
     /// Jump to the selected page.
     public func jump(to index: Int, animated: Bool) {
+
         guard let tabView = tabView, let contentScrollView = contentScrollView else { return }
         if currentIndex != index {
             delegate?.swipeMenuView(self, willChangeIndexFrom: currentIndex, to: index)
         }
+
+        isJumping = true
         jumpingToIndex = index
 
         tabView.jump(to: index)
         contentScrollView.jump(to: index, animated: animated)
+
+        update(from: currentIndex, to: index)
     }
 
     /// Notify changing orientaion to `SwipeMenuView` before it.
